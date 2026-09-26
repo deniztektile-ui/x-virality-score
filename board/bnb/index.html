@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deniz · BNB Monitor</title>
+<style>
+body{margin:0;background:#091216;color:#eaf3f5;font:16px system-ui;line-height:1.6}main{max-width:1150px;margin:40px auto;padding:0 24px}h1{font-size:32px;margin-bottom:4px}.muted{color:#9bb1b8}#status{padding:16px;border:1px solid #48606a;border-radius:12px;margin:24px 0}a{color:#42d9eb}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:12px;border-bottom:1px solid #2b4149}th{color:#9bb1b8}.scroll{overflow:auto}code{font-size:12px}#creators{display:flex;flex-wrap:wrap;gap:12px}#creators p{padding:12px;border:1px solid #2b4149;border-radius:8px}small{color:#9bb1b8}
+</style>
+<main><a href="../">← Панель X</a><h1>Deniz · Запуски BNB Chain</h1><div class="muted">@javohir85 · Four.meme · Только наблюдение</div>
+<div id="status" role="status">Источник ещё не подключён. Запустите bnb_monitor.py с API-токеном Bitquery.</div>
+<p>Последние 100 запусков, возвращённые источником. Между проверками возможны пропуски. Это выборка, а не полная история создателей.</p>
+<p class="muted">Доходность, ликвидность и продажи создателей ещё не анализируются. Частота запусков не означает качество. Связь кошельков с профилями X не установлена.</p>
+<h2>Создатели в текущей выборке</h2><div id="creators"></div>
+<h2>Монеты</h2><div class="scroll"><table><thead><tr><th>Монета</th><th>Контракт</th><th>Создатель</th><th>Запуск · Душанбе</th></tr></thead><tbody id="rows"></tbody></table></div>
+<p><small>Страница проверяет файл каждые 15 секунд. Сборщик с --watch запрашивает API каждые 5 минут; запросы расходуют квоту Bitquery. Закрытие сборщика останавливает обновления.</small></p></main>
+<script>
+const byId=id=>document.getElementById(id);
+function node(tag,text){const e=document.createElement(tag);e.textContent=text;return e;}
+function link(address,kind){if(!/^0x[0-9a-f]{40}$/i.test(address))return node('span','Неизвестно');const a=node('a',address.slice(0,8)+'…'+address.slice(-6));a.href='https://bscscan.com/'+kind+'/'+address;a.target='_blank';a.rel='noopener noreferrer';a.title=address;return a;}
+function date(value){const d=new Date(value);return Number.isNaN(d.getTime())?'Нет данных':d.toLocaleString('ru-RU',{timeZone:'Asia/Dushanbe'});}
+async function refresh(){try{
+ const response=await fetch('./data.json?t='+Date.now(),{cache:'no-store'});
+ if(!response.ok)throw new Error('file');const d=await response.json();
+ const stamp=Date.parse(d.last_success);const age=Date.now()-stamp;const stale=!Number.isFinite(stamp)||age>420000;
+ byId('status').textContent=d.status==='error'?'Ошибка источника. Последнее успешное обновление: '+date(d.last_success)+'. Подробности в терминале.':stale?'Данные устарели. Последнее обновление: '+date(d.last_success):'Последний успешный запрос: '+date(d.last_success)+'. Получено монет: '+(d.rows||[]).length;
+ byId('rows').replaceChildren();byId('creators').replaceChildren();const counts=new Map();
+ for(const row of d.rows||[]){const tr=document.createElement('tr');tr.append(node('td',row.name+' ('+row.symbol+')'));for(const [value,kind] of [[row.token,'token'],[row.creator,'address']]){const td=document.createElement('td');td.append(link(value,kind));tr.append(td);}tr.append(node('td',date(row.launch_time)));byId('rows').append(tr);counts.set(row.creator,(counts.get(row.creator)||0)+1);}
+ for(const [address,count] of counts){const p=document.createElement('p');p.append(link(address,'address'),document.createTextNode(' · '+count+' в выборке'));byId('creators').append(p);}
+ }catch{byId('status').textContent='Нет доступа к файлу данных. Проверьте терминал сборщика. Старые строки, если видны, не обновлены.';}}
+refresh();setInterval(refresh,15000);
+</script></html>
