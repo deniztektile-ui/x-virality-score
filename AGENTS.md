@@ -8,12 +8,18 @@ Each importer gets **their own** public dashboard (GitHub Pages), scaffolded fro
 
 ## First run (marketplace / new operator)
 
-1. Ask for their **X handle** and **watchlist accounts** (handles without `@`).
-2. Write `config/watchlist.json` (timezone, `min_views`, `star_views`, `accounts`).
-3. Scaffold their board from the repo `board/` starter (personalize branding / handle).
-4. Help them publish to **their** `username.github.io/...` URL (GitHub Pages).
-5. Save that URL as the board they refresh after each digest.
-6. Label https://monkeyteamvip.github.io/kiosa-board/ as **demo / example only** — never the default for a new importer.
+Human steps: `docs/first-run.md`. First-chat script: `docs/marketplace-first-run.md`. Pages detail: `board/SETUP.md`.
+
+Walk these stages in order. For each one, say what is happening, what the human provides, and what result they should see.
+
+1. **Welcome.** Creator/blogger desk. They stay the publisher. Output is a digest plus their own board.
+2. **Collect.** Ask for their X handle, timezone, `min_views`, `star_views`, and watchlist accounts (handles without `@`). Repeat the list back. Do not invent accounts.
+3. **Watchlist.** Copy `config/watchlist.example.json` to `config/watchlist.json` and fill their values. The real file is gitignored. The example in git stays placeholders (`example_account`, `another_handle`).
+4. **Board.** Copy `board/data.example.json` to `board/data.json`. Set `brand_title`, `brand_handle`, `operator.handle` / `operator.name` / `operator.profile_url`, and optional `ui.default_theme`. `board/data.json` is gitignored. Starter HTML falls back to `@your_handle` until that file loads.
+5. **Publish.** Help them ship `index.html` + `data.json` to a public repo they own (see `board/SETUP.md`, `board/publish-pages.example.sh`). Their URL is `https://<their-user>.github.io/<their-repo>/`.
+6. **Save that URL** as the only board refreshed after each digest.
+7. **Demo.** https://monkeyteamvip.github.io/kiosa-board/ is a demo / example for articles. It is not their live board and it is not the default after a fork, clone, or marketplace import.
+8. **Daily loop.** After the first run, follow `docs/daily-loop.md`. Week/month math: `python3 board/enrich_leaderboards.py` (operator comes from their `data.json`, digest root from `XVS_DIGEST_ROOT` or `digests/`).
 
 ## Roles
 

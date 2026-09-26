@@ -32,8 +32,23 @@
   },
   "leaderboards": {
     "as_of": "2026-09-15",
+    "tracking_start": "2026-09-13",
+    "days_included": [
+      "2026-09-09",
+      "2026-09-10",
+      "2026-09-11",
+      "2026-09-12",
+      "2026-09-13",
+      "2026-09-14",
+      "2026-09-15"
+    ],
+    "month_days_included": [
+      "2026-09-13",
+      "2026-09-14",
+      "2026-09-15"
+    ],
     "week": {
-      "label": "Week",
+      "label": "Rolling week · Sep 9–Sep 15",
       "range": [
         "2026-09-09",
         "2026-09-15"
@@ -41,21 +56,38 @@
       "entries": []
     },
     "month": {
-      "label": "Month",
+      "label": "September 2026 · from Sep 13",
       "range": [
-        "2026-09-01",
+        "2026-09-13",
         "2026-09-15"
       ],
       "entries": []
-    },
-    "days_included": []
+    }
   },
   "board_features": {
     "count_up": true,
     "live_pulse": true,
     "theme_toggle": true,
+    "themes": [
+      "night",
+      "day"
+    ],
     "grok_ambient": true,
     "week_month_boards": true,
-    "no_hits_reasons": true
-  }
+    "day_roster_best_total": true,
+    "day_compare_chart": true,
+    "week_strip": true,
+    "no_hits_reasons": true,
+    "marker_class": "xvs-dash-2026"
+  },
+  "operator": {
+    "handle": "@your_handle",
+    "name": "Your Name",
+    "profile_url": "https://x.com/your_handle"
+  },
+  "ui": {
+    "default_theme": "night"
+  },
+  "day_roster": [],
+  "you_rank": null
 }

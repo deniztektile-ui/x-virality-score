@@ -11,7 +11,7 @@
 
 ## Editing the watchlist
 
-Open `config/watchlist.json` and replace handles with whoever is actually viral in **your** niche. Save. Next run uses the new list. No code change required.
+Open `config/watchlist.json` (create it from `config/watchlist.example.json` if needed) and replace handles with whoever is actually viral in **your** niche. Save. Next run uses the new list. No code change required. The real watchlist and `board/data.json` are gitignored.
 
 ## Your board
 
