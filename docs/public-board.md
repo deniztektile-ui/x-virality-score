@@ -1,13 +1,15 @@
 # Public board
 
-## Personal board (default for every importer)
+## Personal board (every importer)
 
-Each operator gets **their own** GitHub Pages dashboard:
+Each operator gets **their own** GitHub Pages dashboard. Walkthrough: [first-run.md](first-run.md).
 
-1. First chat: collect X handle + watchlist → write `config/watchlist.json`
-2. Scaffold from repo `board/` starter
+1. First chat: collect X handle + watchlist → write `config/watchlist.json` (gitignored; start from `watchlist.example.json`)
+2. Scaffold from repo `board/` (`data.example.json` → gitignored `data.json`, with their `brand_handle` and `operator`)
 3. Publish to **their** `https://<user>.github.io/<repo>/` URL
 4. Refresh that board after every daily digest
+
+**Result:** the URL in step 3 loads their X Score and Day Target. That URL is the one saved for the daily loop.
 
 ## Demo / example only
 
